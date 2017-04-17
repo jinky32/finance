@@ -1,5 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var finance = require('../data/convertcsv.json');
+
+//console.log(finance);
+console.log(finance[0]);
+console.log(finance[0].FIELD3);
+var field3 = finance[0].FIELD3;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,7 +13,8 @@ router.get('/', function(req, res, next) {
     title: 'Stuart Express',
     name: 'Stuart',
     condition:false,
-    anyArray:[1,2,3]
+    anyArray:[1,2,3],
+    field3:field3
   });
 });
 
