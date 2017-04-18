@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/vendor', vendors);
 
-//TODO apply routes date/:date, vendor/:vendor, amount/:amount, category/:category
+//TODO apply routes date/:date, vendor/:vendor, amount/:amount, category/:category, method/:method (e.g. cash, transfer)
 
 
 // catch 404 and forward to error handler
