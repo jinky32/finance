@@ -23,11 +23,21 @@ router.get('/', function(req, res, next) {
 
 router.get('/:vendor?', function(req, res, next) {
     var vendorName = req.params.vendor;
+    for(var i = 0; i < finance.length; i++){
+
+        if (vendorName ==  finance[i].FIELD2){
+            console.log(finance[i].FIELD2 + ' is equal to ' + vendorName);
+        } else {
+            console.log('hmm, for some reason they are different');
+        }
+    }
+
     res.render('vendor', {
         vendor: vendorName,
         finance: finance,
         field3:field3
     });
+    console.log(finance.length);
     //res.send('this is the page for ' + vendorName);
 });
 
