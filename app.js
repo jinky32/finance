@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 
+// routes
 var routes = require('./routes/index');
 var vendors = require('./routes/vendor');
 

@@ -23,7 +23,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/:vendor?', function(req, res, next) {
     var vendorName = req.params.vendor;
-    res.send('this is the page for ' + vendorName);
+    res.render('vendor', {
+        vendor: vendorName,
+        finance: finance,
+        field3:field3
+    });
+    //res.send('this is the page for ' + vendorName);
 });
 
 module.exports = router;
