@@ -25,6 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
+//TODO apply routes date/:date, vendor/:vendor, amount/:amount, category/:category
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
