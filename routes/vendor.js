@@ -4,17 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var finance = require('../data/convertcsv.json');
-//TODO sort out requiring the parseDate function from the helper dir
 var parseDate = require('../helpers/parseDate');
-
-// TODO remove the below and import from helper dir as above
-// parse a date in dd/mm/yyyy format
-//function parseDate(input) {
-//    var parts = input.split('/');
-//    console.log(parts);
-//    // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
-//    return new Date(parts[2], parts[1]-1, parts[0]);
-//}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,7 +25,8 @@ router.get('/:vendor?', function(req, res, next) {
         if (vendorName ==  finance[i].FIELD2){
 
             //push matching records into the shop array which is passed as a value in the res.render below
-            shop.push({date:parseDate.stringToDate(finance[i].FIELD1), name:finance[i].FIELD2, amount:parseInt(finance[i].FIELD3)});
+            //TODO fnd out why the value after the decimal place are being ignored
+            shop.push({date:parseDate.stringToDate(finance[i].FIELD1), name:finance[i].FIELD2, amount:parseInt(finance[i].FIELD3.replace(/,/g, "", '')).toFixed(2)});
 
             console.log(finance[i].FIELD2 + ' is equal to ' + vendorName);
             console.log(shop);
