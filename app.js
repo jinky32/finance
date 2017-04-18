@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 
 var routes = require('./routes/index');
+var vendors = require('./routes/vendor');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/vendor', vendors);
 
 //TODO apply routes date/:date, vendor/:vendor, amount/:amount, category/:category
 
