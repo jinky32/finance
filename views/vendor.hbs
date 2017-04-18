@@ -1,3 +1,7 @@
 <h1>{{vendor}}</h1>
-<p>Hi! Welcome to {{vendor}}</p>
-<h2>{{field3}}</h2>
+<p>Hi! Welcome to details about spending at {{vendor}}</p>
+<!--TODO format the date properly e.g. http://stackoverflow.com/questions/32260117/handlebars-date-format-issue or
+https://www.npmjs.com/package/handlebars-dateformat-->
+{{#each shop}}
+    <li>This amount {{this.amount}} was spent at {{this.name}} on {{this.date}}</li>
+{{/each}}
