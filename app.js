@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 var mongoose = require('mongoose');
 //connect to mongodb
-mongoose.connect('localhost:27017/finance');
+mongoose.connect('localhost:27017/statement');
+//mongoose.connect('localhost:27017/shopping');
 
 // routes
 var routes = require('./routes/index');

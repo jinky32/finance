@@ -7,33 +7,11 @@ var Statement = require('../models/statement');
 var mongoose = require('mongoose');
 //connect to mongodb
 mongoose.connect('localhost:27017/statement');
+console.log('ready state is '+mongoose.connection.readyState);
 
 var parseDate = require('../helpers/parseDate');
 //console.log(statements);
 
-var statements2 = [
-    {
-        date:'firs title',
-        name:'first description',
-        amount:10
-    },
-    {
-        date:'second title',
-        name:'firsecondst description',
-        amount:10
-    },
-    {
-        date:'third title',
-        name:'third description',
-        amount:10
-    },
-    {
-        date:'fourth title',
-        name:'fourth description',
-        amount:10
-    }
-
-];
 
 var done = 0;
 for( var i = 0; i < statements.length; i++ ) {
