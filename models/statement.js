@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 var statementSchema = new Schema({
    date : {type:Date, required:true},
    name: {type:String, required:true},
+   method: {type:String},
    amount: {type:Number, required:true}
 });
 
