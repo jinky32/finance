@@ -14,7 +14,7 @@ var splitName = require('../helpers/splitName');
 
 //console.log(statements);
 
-//TODO figure out why all records from the json aren't being imported
+//TODO figure out why all records from the json aren't being imported.  Is it because the amunt values have commas in ?
 var done = 0;
 // set substring to three space.  This will be used to check for those spaces in the name values
 // in the source data
