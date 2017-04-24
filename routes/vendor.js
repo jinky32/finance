@@ -12,6 +12,7 @@ var Statement = require('../models/statement');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    //TODO on this page I want to show a list of all vendors (no duplicates) with links to their pages
     res.send('You need to add the name of a vendor to the URL e.g. Tesco (vendor/tesco)');
 });
 
