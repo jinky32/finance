@@ -2,7 +2,9 @@
  * Created by stuartbrown on 20/04/2017.
  */
 //var finance = require('../data/convertcsv.json');
-var statements= require('../data/convertcsv.json');
+//var statements= require('../data/convertcsv.json');
+var statements= require('../data/boom.json');
+
 var Statement = require('../models/statement');
 var mongoose = require('mongoose');
 //connect to mongodb
@@ -19,29 +21,30 @@ var done = 0;
 // set substring to three space.  This will be used to check for those spaces in the name values
 // in the source data
 substring = "   ";
+console.log(statements.length);
 for( var i = 0; i < statements.length; i++ ) {
     // create new statement object
     var newStatement = new Statement();
     //use the stringToDate helper function to cast the string in imput file to a Date
-    newStatement.date = parseDate.stringToDate(statements[i].FIELD1);
+    newStatement.date = parseDate.stringToDate(statements[i].date);
 
     //check the name field to see it includes the spaces defined in substring var above
-    if(statements[i].FIELD2.includes(substring)){
+    if(statements[i].vendor.includes(substring)){
         //if it does contain spaces then we want to get the last three chars of the entire string
         //and store those in method var which will then go into db.
         //we trim to remove any white space for methods that are only 2 chars long
-        var method = statements[i].FIELD2.substr(statements[i].FIELD2.length - 3).trim();
+        var method = statements[i].vendor.substr(statements[i].vendor.length - 3).trim();
 
         //for some reason HSBC often appends ))) to the end of strings. We want to chuck away those away!
         if(method !==')))'){
 
             //if the value isn't ))) and meets the criteria above we can inset into the db
-            newStatement.method = statements[i].FIELD2.substr(statements[i].FIELD2.length - 3).trim();
+            newStatement.method = statements[i].vendor.substr(statements[i].vendor.length - 3).trim();
         }
     }
-    newStatement.name = splitName.splitName(statements[i].FIELD2);
-    newStatement.amount = Number(statements[i].FIELD3);
-    //console.log('imported record ' + i + 'of ' + statements.length);
+    newStatement.name = splitName.splitName(statements[i].vendor);
+    newStatement.amount = Number(statements[i].amount);
+    console.log('imported record ' + i + 'of ' + statements.length);
     //newStatement.save();
     newStatement.save(function(err, result){
         done++;
@@ -49,7 +52,7 @@ for( var i = 0; i < statements.length; i++ ) {
             exit();
         }
         else {
-            console.log('imported '+ statements[done].FIELD2)
+            console.log('imported '+ statements[done].vendor)
         }
     });
 
