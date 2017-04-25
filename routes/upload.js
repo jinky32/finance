@@ -18,8 +18,8 @@ var storage = multer.diskStorage({
         callback(null, './data')
     },
     filename: function(req, file, callback) {
-        callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-        //callback(null, req.body.bank + '-' + Date.now() + path.extname(file.originalname))
+        //callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+        callback(null, req.body.bank + '-' + Date.now() + path.extname(file.originalname))
 
     }
 });
@@ -37,8 +37,9 @@ router.post('/',
         storage: storage,
         fileFilter: function(req, file, callback) {
             var ext = path.extname(file.originalname)
-            if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-                return callback(res.end('Only images are allowed'), null)
+            //if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+            if (ext !== '.csv') {
+                return callback(res.end('Only csvs are allowed'), null)
             }
             callback(null, true)
         }
