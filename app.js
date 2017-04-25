@@ -13,6 +13,7 @@ mongoose.connect('localhost:27017/statement');
 // routes
 var routes = require('./routes/index');
 var vendors = require('./routes/vendor');
+var upload = require('./routes/upload');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/vendor', vendors);
+app.use('/upload', upload);
 
 //TODO apply routes date/:date, vendor/:vendor, amount/:amount, category/:category, method/:method (e.g. cash, transfer)
 
