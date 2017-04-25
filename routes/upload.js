@@ -1,7 +1,6 @@
 /**
  * Created by stuartbrown on 25/04/2017.
  */
-
 var express = require("express");
 var multer = require('multer');
 var router = express.Router();
@@ -10,7 +9,7 @@ var path = require('path');
 
 //Get root route
 router.get('/', function(req, res, next) {
-
+    console.log(req.body, 'Body');
     res.render('upload');
 });
 
@@ -20,11 +19,21 @@ var storage = multer.diskStorage({
     },
     filename: function(req, file, callback) {
         callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+        //callback(null, req.body.bank + '-' + Date.now() + path.extname(file.originalname))
+
     }
 });
 
-router.post('/', function(req, res) {
-    var upload = multer({
+//router.post('/', multer({ des: './data/' }).single('statement'), function(req,res){
+//    console.log(req.body); //form fields
+//
+//    console.log(req.file); //form files
+//
+//    res.status(204).end();
+//});
+
+router.post('/',
+    multer({
         storage: storage,
         fileFilter: function(req, file, callback) {
             var ext = path.extname(file.originalname)
@@ -33,13 +42,34 @@ router.post('/', function(req, res) {
             }
             callback(null, true)
         }
-    }).single('statement');
-    upload(req, res, function(err) {
-        res.end('File is uploaded')
     })
-        console.log(req.body, 'Body');
+        .single('statement'),
+    function(req, res) {
+    //console.log(req.body, 'Body');
+        console.log(req.body.bank, 'Body');
+
         console.log(req.files, 'files');
-})
+        res.end('File is uploaded')
+
+});
+
+//router.post('/', function(req, res) {
+//    console.log(req.body, 'Body');
+//    console.log(req.files, 'files');
+//    var upload = multer({
+//        storage: storage,
+//        fileFilter: function(req, file, callback) {
+//            var ext = path.extname(file.originalname)
+//            if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+//                return callback(res.end('Only images are allowed'), null)
+//            }
+//            callback(null, true)
+//        }
+//    }).single('statement');
+//    upload(req, res, function(err) {
+//        res.end('File is uploaded')
+//    })
+//})
 
 
 

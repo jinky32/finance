@@ -7,16 +7,16 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var storage = multer.diskStorage({
-    destination: './data/',
-    filename: function (req, file, cb) {
-        crypto.pseudoRandomBytes(16, function (err, raw) {
-            if (err) return cb(err)
-
-            cb(null, raw.toString('hex') + path.extname(file.originalname))
-        })
-    }
-});
+//var storage = multer.diskStorage({
+//    destination: './data/',
+//    filename: function (req, file, cb) {
+//        crypto.pseudoRandomBytes(16, function (err, raw) {
+//            if (err) return cb(err)
+//
+//            cb(null, raw.toString('hex') + path.extname(file.originalname))
+//        })
+//    }
+//});
 
 //var upload = multer({ storage: storage });
 
@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
 //    res.end();
 //});
 
-router.post('/', multer({ storage: storage }).single('statement'), function(req,res){
+router.post('/', multer({ des: './data/' }).single('statement'), function(req,res){
     console.log(req.body); //form fields
 
     console.log(req.file); //form files
