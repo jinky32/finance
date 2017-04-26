@@ -45,9 +45,11 @@ router.post('/',
     //console.log(req.body, 'Body');
         console.log(req.body.bank, 'Body');
 
-        console.log(req.files, 'files');
+        //console.log(req.files, 'files');
+        console.log('THIS IS THE FILENAME - '+req.file.filename);
         //res.end('File is uploaded')
         //res.send('File is uploaded')
+//TODO add another param to the runscript function that will take the name of the file to be parsed (req.file.filename) by statement-seeder
 
         runScript.runScript('./seed/statement-seeder.js', function (err) {
             if (err) throw err;
