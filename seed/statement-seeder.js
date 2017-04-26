@@ -1,15 +1,12 @@
 /**
  * Created by stuartbrown on 20/04/2017.
  */
-//var finance = require('../data/convertcsv.json');
-//var statements= require('../data/convertcsv.json');
 var statements= require('../data/boom.json');
-
 var Statement = require('../models/statement');
 var mongoose = require('mongoose');
 //connect to mongodb
 mongoose.connect('localhost:27017/statement');
-console.log('ready state is '+mongoose.connection.readyState);
+//console.log('ready state is '+mongoose.connection.readyState);
 
 var parseDate = require('../helpers/parseDate');
 var splitName = require('../helpers/splitName');
