@@ -8,7 +8,8 @@ var path = require('path');
 //childprocess is used in the runScript helper function.  But dose it go here or in the function file?
 var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
-
+var statementImport = require('../helpers/statement-seeder');
+var statements= require('../data/boom.json');
 
 //Get root route
 router.get('/', function(req, res, next) {
@@ -47,15 +48,17 @@ router.post('/',
 
         //console.log(req.files, 'files');
         console.log('THIS IS THE FILENAME - '+req.file.filename);
+        var filename = req.file.filename;
         //res.end('File is uploaded')
         //res.send('File is uploaded')
 //TODO add another param to the runscript function that will take the name of the file to be parsed (req.file.filename) by statement-seeder
 
-        runScript.runScript('./seed/statement-seeder.js', function (err) {
+        statementImport.statementSeeder(statements, function (err) {
             if (err) throw err;
             console.log('finished running some-script.js');
         });
 
+        console.log('THIS IS THE FILENAME AGAIN! - '+ filename);
 //TODO need to find a way to send a success message on successful upload
 });
 
