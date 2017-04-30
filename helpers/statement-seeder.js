@@ -53,7 +53,6 @@ console.log('THIS IS THE NEW OBJECT '+ statements);
             done++;
             if(done === statements.length){
                 exit();
-                //TODO consider moving the importer JSON file from data dir to an archive dir
             }
             else {
                 console.log('imported '+ statements[done].vendor)

@@ -5,9 +5,6 @@
 var convertJSON = function convertJSON(inputFile, callback) {
 
 
-//!! FOR SOME REASON TO EXECUTE THIS FILE YOU HAVE TO RUN THE COMMAND FROM WITHIN THE DIRECTORY!!
-    //look at http://stackoverflow.com/questions/41411604/how-to-delete-local-file-with-fs-unlink as poss resoltion
-//const csvFilePath='./test.csv';
     var fs = require('fs');
     const csv=require('csvtojson');
     console.log('NOW I AM IN convertJSONOriginal');
@@ -33,8 +30,14 @@ var convertJSON = function convertJSON(inputFile, callback) {
                 if(err) {
                     return console.log(err);
                 }
-
-                console.log("The file was saved again!");
+                var obj;
+                fs.readFile('./data/' + inputFile.split('.')[0] + '.json', 'utf8', function (err, data) {
+                    if (err) throw err;
+                    obj = JSON.parse(data);
+                    //console.log(obj);
+                    callback(err,obj);
+                });
+                console.log("The file was saved!");
                 //TODO delete the imported csv file
                 fs.unlink("./data/" + inputFile, function (err) {
                     if (err) {
@@ -43,17 +46,13 @@ var convertJSON = function convertJSON(inputFile, callback) {
                         console.log('successfully deleted local file');
                     }
                 });
-                var jsonFile = inputFile.split('.')[0] + '.json' ;
-                console.log('THIS IS jsonfile AS IT COMES FROM convertJSONOriginal' +jsonFile);
-                callback(err,jsonFile);
+
+                //var jsonFile = inputFile.split('.')[0] + '.json' ;
+                //console.log('THIS IS jsonfile AS IT COMES FROM convertJSONOriginal' +jsonFile);
+                //callback(err,inputFile.split('.')[0] + '.json');
             });
 
-            // log our json to verify it has worked
-            //console.log(json);
         });
-
-
-
 };
 
 
