@@ -47,9 +47,6 @@ var convertJSON = function convertJSON(inputFile, callback) {
                     }
                 });
 
-                //var jsonFile = inputFile.split('.')[0] + '.json' ;
-                //console.log('THIS IS jsonfile AS IT COMES FROM convertJSONOriginal' +jsonFile);
-                //callback(err,inputFile.split('.')[0] + '.json');
             });
 
         });
