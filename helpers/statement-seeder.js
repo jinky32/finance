@@ -5,7 +5,7 @@
 var statementSeeder = function statementSeeder(statements) {
 
 
-//var statements= require('../data/boom.json');
+var statements2= require('../data/boom.json');
     var Statement = require('../models/statement');
     var mongoose = require('mongoose');
 //connect to mongodb
@@ -15,14 +15,16 @@ var statementSeeder = function statementSeeder(statements) {
     var parseDate = require('./parseDate');
     var splitName = require('./splitName');
 
-//console.log(statements);
+console.log('THIS IS THE NEW OBJECT '+ statements);
+    console.log('THIS SIS STATEMENTS '+JSON.stringify(statements));
+    //console.log('AND THIS SIS STATEMENTS2 '+JSON.stringify(statements2));
 
 //TODO figure out why all records from the json aren't being imported.  Is it because the amunt values have commas in ?
     var done = 0;
 // set substring to three space.  This will be used to check for those spaces in the name values
 // in the source data
     substring = "   ";
-    console.log(statements.length);
+    //console.log(statements.length);
     for( var i = 0; i < statements.length; i++ ) {
         // create new statement object
         var newStatement = new Statement();
