@@ -46,7 +46,8 @@ console.log('THIS IS THE NEW OBJECT '+ statements);
             }
         }
         newStatement.name = splitName.splitName(statements[i].vendor);
-        newStatement.amount = Number(statements[i].amount);
+        //newStatement.amount = Number(statements[i].amount);
+        newStatement.amount = statements[i].amount;
         console.log('imported record ' + i + 'of ' + statements.length);
         //newStatement.save();
         newStatement.save(function(err, result){

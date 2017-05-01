@@ -8,8 +8,10 @@ var path = require('path');
 //childprocess is used in the runScript helper function.  But dose it go here or in the function file?
 var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
-var statementImport = require('../helpers/statement-seeder');
-var statements= require('../data/boom.json');
+var convertJSON = require('../helpers/convertJSONOriginal');
+var upload = require('../helpers/statement-seeder');
+
+var statements= require("../data/HSBC-1493565387017.json");
 
 //Get root route
 router.get('/', function(req, res, next) {
@@ -41,25 +43,19 @@ router.post('/',
             callback(null, true)
         }
     })
-        .single('statement'),
+        .single('statement'), //this is the name of the form field to get the file from
     function(req, res) {
-    //console.log(req.body, 'Body');
-        console.log(req.body.bank, 'Body');
-
-        //console.log(req.files, 'files');
         console.log('THIS IS THE FILENAME - '+req.file.filename);
-        var filename = req.file.filename;
-        //res.end('File is uploaded')
-        //res.send('File is uploaded')
-//TODO add another param to the runscript function that will take the name of the file to be parsed (req.file.filename) by statement-seeder
-
-        statementImport.statementSeeder(statements, function (err) {
-            if (err) throw err;
-            console.log('finished running some-script.js');
+        convertJSON.convertJSON(req.file.filename, function(err, filename){
+            if (err){
+                console.log('fikkin erro man'+ err);
+            } else {
+                upload.statementSeeder(filename);
+            }
         });
 
-        console.log('THIS IS THE FILENAME AGAIN! - '+ filename);
 //TODO need to find a way to send a success message on successful upload
 });
 
 module.exports = router;
+

@@ -3,12 +3,14 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+require('mongoose-currency').loadType(mongoose);
+var Currency = mongoose.Types.Currency;
 
 var statementSchema = new Schema({
    date : {type:Date, required:true},
    name: {type:String, required:true},
    method: {type:String},
-   amount: {type:Number, required:true},
+   amount: {type: Currency, required:true},
    category: {type:String, default:'Not Set'},
    importDate: {type : Date, default:Date.now, required:true}
 });
