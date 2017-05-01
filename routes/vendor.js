@@ -19,8 +19,8 @@ router.get('/', function(req, res, next) {
 router.get('/:vendor?', function(req, res, next) {
 
     var vendorName = req.params.vendor;
-    console.log(req.params.vendor);
-
+    console.log('HERE IS PARAM' + req.params.vendor);
+    //res.send('You need to add the name of a vendor to the URL e.g. Tesco (vendor/tesco)');
     Statement.find({name:req.params.vendor}, function(err, doc){
        if (err) {
            console.error('error no entries found');
