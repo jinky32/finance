@@ -1,6 +1,3 @@
-/**
- * Created by stuartbrown on 30/04/2017.
- */
 {
     "verbose": true,
     "ignore": ["*.test.js", "fixtures/*"]
