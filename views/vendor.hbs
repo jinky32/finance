@@ -2,6 +2,28 @@
 <p>Hi! Welcome to details about spending at {{vendor}}</p>
 <!--TODO format the date properly e.g. http://stackoverflow.com/questions/32260117/handlebars-date-format-issue or
 https://www.npmjs.com/package/handlebars-dateformat-->
+<table class="table">
+    <tr>
+        <th>Amount</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Method</th>
+    </tr>
+    <tbody>
 {{#each shop}}
-    <li>This amount {{this.amount}} was spent at {{this.name}} on {{this.date}} and used method - {{this.method}}</li>
+
+
+    <tr>
+        <td>{{formatNumber this.amount style="currency" currency="GBP"}}</td>
+        <td>{{this.name}}</td>
+        <td>{{formatDate this.date weekday="long" day="numeric" month="long" year="numeric"}}</td>
+        <td>{{this.method}}</td>
+    </tr>
 {{/each}}
+    <!--<li>This amount {{this.amount}} was spent at {{this.name}} on {{this.date}} and used method - {{this.method}}</li>-->
+
+    <!--the below is when fomat.js is in-->
+<!--formatDate this.date weekday="long" day="numeric" month="long" year="numeric"-->
+    </tbody>
+</table>
+

@@ -5,6 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
+//begin allow for format.js currency and date formatting
+var Handlebars     = require('handlebars');
+var HandlebarsIntl = require('handlebars-intl');
+HandlebarsIntl.registerWith(Handlebars);
+//end allow for format.js
 var mongoose = require('mongoose');
 //connect to mongodb
 mongoose.connect('localhost:27017/statement');
