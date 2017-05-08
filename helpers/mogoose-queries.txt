@@ -1,0 +1,231 @@
+Group by Name and total
+
+db.statements.aggregate({
+    $group : {
+        _id: "$name",
+        total: {$sum : 1}
+    }
+})
+
+
+Group by name and get average spend
+
+db.statements.aggregate({
+    $group : {
+        _id: "$name",
+        avgSpend: {$avg : "$amount"}
+    }
+})
+
+Group by name and show max spend (but be careful because spend is a negative number so this shows min spend! - need to use $min not $max)
+
+db.statements.aggregate({
+    $group : {
+        _id: "$name",
+        maxSpend: {$max : "$amount"}
+    }
+})
+
+
+
+Use $project to change all names to lowercase
+
+db.statements.aggregate([{
+    $project :
+        {name:
+            {$toLower:"$name"}, _id:0}
+}])
+
+
+
+Include the year, month number, week number and day number in query
+
+db.statements.aggregate([{
+        $project : {
+            year : {
+                $year : "$date"
+            },
+            month : {
+                $month : "$date"
+            },
+            week : {
+                $week : "$date"
+            },
+            day : {
+                $dayOfWeek : "$date"
+            },
+            _id : 1,
+            name : 1
+        }
+    }
+    ]
+    )
+
+
+
+Total Daily spend on each year/month/week/day
+
+
+    db.statements.aggregate([{
+        $project : {
+            year : {
+                $year : "$date"
+            },
+            month : {
+                $month : "$date"
+            },
+            week : {
+                $week : "$date"
+            },
+            day : {
+                $dayOfWeek : "$date"
+            },
+            _id : 1,
+            name : 1,
+            amount:1
+        }
+    },
+    {
+               $group : {
+                   _id : {
+                       year : "$year",
+                       month : "$month",
+                       week : "$week",
+                       day : "$day"
+                   },
+                   totalDailyAmount : {
+                       $sum : "$amount"
+                   }
+               }
+           }
+    ]
+    )
+
+
+
+
+
+
+
+Total spend grouped by year/month/week
+
+
+
+     db.statements.aggregate([{
+        $project : {
+            year : {
+                $year : "$date"
+            },
+            month : {
+                $month : "$date"
+            },
+            week : {
+                $week : "$date"
+            },
+            day : {
+                $dayOfWeek : "$date"
+            },
+            _id : 1,
+            name : 1,
+            amount:1
+        }
+    },
+    {
+        $group : {
+            _id : {
+               year : "$year",
+               month : "$month",
+               week : "$week",
+               day : "$day"
+               },
+               totalDailyAmount : {
+                   $sum : "$amount"
+            }
+        }
+    },
+    {
+        $group : {
+
+            _id : {
+                year : "$_id.year",
+                month : "$_id.month",
+                week : "$_id.week"
+            },
+            totalWeeklyAmount : {
+                $sum : "$totalDailyAmount"
+            },
+            totalDayAmount : {
+                $push : {
+                    totalDayAmount : "$totalDailyAmount",
+                    dayOfWeek : "$_id.day"
+                }
+            }
+        }
+    }
+    ]
+    )
+    
+
+
+
+Get records for just particular month or week in a month
+
+
+db.statements.aggregate([{
+        $project : {
+            year : {
+                $year : "$date"
+            },
+            month : {
+                $month : "$date"
+            },
+            week : {
+                $week : "$date"
+            },
+            day : {
+                $dayOfWeek : "$date"
+            },
+            _id : 1,
+            name : 1,
+            amount:1
+        }
+    },
+    {
+               $group : {
+                   _id : {
+                       year : "$year",
+                       month : "$month",
+                       week : "$week",
+                       day : "$day"
+                   },
+                   totalDailyAmount : {
+                       $sum : "$amount"
+                   }
+               }
+           },
+    {
+        $group : {
+
+            _id : {
+                year : "$_id.year",
+                month : "$_id.month",
+                week : "$_id.week"
+            },
+            totalWeeklyAmount : {
+                $sum : "$totalDailyAmount"
+            },
+            totalDayAmount : {
+                $push : {
+                    totalDayAmount : "$totalDailyAmount",
+                    dayOfWeek : "$_id.day"
+                }
+            }
+        }
+    }, {
+        $match : {
+            "_id.month" : 3,
+            "_id.week" : 12
+        }
+    }
+    ]
+    )

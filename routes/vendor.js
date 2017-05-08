@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 var parseDate = require('../helpers/parseDate');
 var mongoose = require('mongoose');
-console.log('ready state is '+mongoose.connection.readyState);
+//console.log('ready state is '+mongoose.connection.readyState);
 var Statement = require('../models/statement');
 
 
@@ -32,5 +32,5 @@ router.get('/:vendor?', function(req, res, next) {
         });
     });
 });
-console.log('ready state is '+mongoose.connection.readyState);
+//console.log('ready state is '+mongoose.connection.readyState);
 module.exports = router;
