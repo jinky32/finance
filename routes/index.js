@@ -36,44 +36,60 @@ router.get('/test', function(req, res, next) {
               $dayOfWeek : "$date"
             },
             _id : 1,
-            name : 1
+            name : 1,
+            amount : 1
+          }
+        },
+        {
+          $group : {
+            _id : {
+              year : "$year",
+              month : "$month",
+              week : "$week",
+              day : "$day"
+            },
+            totalDailyAmount : {
+              $sum : "$amount"
+            }
+          }
+        },
+        {
+          $group : {
+
+            _id : {
+              year : "$_id.year",
+              month : "$_id.month",
+              week : "$_id.week"
+            },
+            totalWeeklyAmount : {
+              $sum : "$totalDailyAmount"
+            },
+            totalDayAmount : {
+              $push : {
+                totalDayAmount : "$totalDailyAmount",
+                dayOfWeek : "$_id.day"
+              }
+            }
+          }
+        },
+        {
+          $match : {
+            "_id.month" : 3,
+            "_id.week" : 12
           }
         }
       ],
       function(err, results){
         console.log("this is the result: ", results); // logs a result if the there is one, and [] if there is no result.
-
+        console.log("THIS IS THE WEEKLY AMOUNT "+results.totalWeeklyAmount);
       });
-  res.send('You need to add the name of a vendor to the URL e.g. Tesco (vendor/tesco)');
-  //Statement.aggregate(
-  //    { $group : {
-  //      _id : { month: { $month : "date" },day: { $dayOfMonth : "date" }},
-  //      count : { $sum : 1 }}
-  //    },
-  //    //{ $group : {
-  //    //  _id : { year: "$_id.year", month: "$_id.month" },
-  //    //  dailyusage: { $push: { day: "$_id.day", count: "$count" }}}
-  //    //},
-  //    //{ $group : {
-  //    //  _id : { year: "$_id.year" },
-  //    //  monthlyusage: { $push: { month: "$_id.month", dailyusage: "$dailyusage" }}}
-  //    //},
-  //    function (err, res)
-  //    { if (err) ; // TODO handle error
-  //      console.log(res);
-  //    });
+      res.render('index', {
+        results: results
+      });
+
 });
 
-  //console.log('woot this is products '+products);
-//  res.render('index', {
-//    title: 'Stuart Express',
-//    name: 'Stuart',
-//    products: products,
-//    condition:false,
-//    anyArray:[1,2,3],
-//    field3:field3
-//  });
-//});
+
 
 router.get('/foo', function(req, res, next) {
   res.send('respond with a resource');
