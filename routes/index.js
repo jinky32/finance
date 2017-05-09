@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Statement = require('../models/statement');
+const util = require('util');
 
 
 
@@ -18,74 +19,98 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/test', function(req, res, next) {
+router.get('/test/:vendor/:year/:month/:week', function(req, res, next) {
 
   Statement.aggregate([
-        {
-          $project : {
-            year : {
-              $year : "$date"
-            },
-            month : {
-              $month : "$date"
-            },
-            week : {
-              $week : "$date"
-            },
-            day : {
-              $dayOfWeek : "$date"
-            },
-            _id : 1,
-            name : 1,
-            amount : 1
-          }
+    { "$match": { "name": req.params.vendor } },
+    {
+      "$redact": {
+        "$cond": [
+          {
+            "$and": [
+              { "$eq": [{ "$year": "$date" },  parseInt(req.params.year)  ]},
+              { "$eq": [{ "$month": "$date" }, parseInt(req.params.month) ]},
+              { "$eq": [{ "$week": "$date" },  parseInt(req.params.week)  ]}
+            ]
+          },
+          "$$KEEP",
+          "$$PRUNE"
+        ]
+      }
+    },
+    {
+      "$group": {
+        "_id": {
+          "name": "$name",
+          "year": { "$year": "$date" },
+          "month": { "$month": "$date" },
+          "week": { "$week": "$date" }
         },
-        {
-          $group : {
-            _id : {
-              year : "$year",
-              month : "$month",
-              week : "$week",
-              day : "$day"
-            },
-            totalDailyAmount : {
-              $sum : "$amount"
-            }
-          }
+        "total": { "$sum": "$amount" }
+      }
+    },
+    {
+      "$group": {
+        "_id": {
+          "name": "$_id.name",
+          "year": "$_id.year"
         },
-        {
-          $group : {
+        "YearlySpends": { "$push": "$total" },
+        "totalYearlyAmount": { "$sum": "$total" },
+        "data": { "$push": "$$ROOT" }
+      }
+    },
+    { "$unwind": "$data" },
+    {
+      "$group": {
+        "_id": {
+          "name": "$_id.name",
+          "month": "$data._id.month"
+        },
+        "YearlySpends": { "$first": "$YearlySpends" },
+        "totalYearlyAmount": { "$first": "$totalYearlyAmount" },
+        "MonthlySpends": { "$push": "$data.total" },
+        "totalMonthlyAmount": { "$sum": "$data.total" },
+        "data": { "$push": "$data" }
+      }
+    },
+    { "$unwind": "$data" },
+    {
+      "$group": {
+        "_id": {
+          "name": "$_id.name",
+          "week": "$data._id.week"
+        },
+        "YearlySpends": { "$first": "$YearlySpends" },
+        "totalYearlyAmount": { "$first": "$totalYearlyAmount" },
+        "MonthlySpends": { "$first": "$MonthlySpends" },
+        "totalMonthlyAmount": { "$first": "$totalMonthlyAmount" },
+        "WeeklySpends": { "$push": "$data.total" },
+        "totalWeeklyAmount": { "$sum": "$data.total" },
+        "data": { "$push": "$data" }
+      }
+    },
+    { "$unwind": "$data" },
+    {
+      "$group": {
+        "_id": "$data._id",
+        "YearlySpends": { "$first": "$YearlySpends" },
+        "totalYearlyAmount": { "$first": "$totalYearlyAmount" },
+        "MonthlySpends": { "$first": "$MonthlySpends" },
+        "totalMonthlyAmount": { "$first": "$totalMonthlyAmount" },
+        "WeeklySpends": { "$first": "$WeeklySpends" },
+        "totalWeeklyAmount": { "$first": "$totalWeeklyAmount" }
+      }
+    }
+  ], function(err, data){
+    if (err) throw err;
+    console.log(util.inspect(data));
+    res.render('index', {
+      data: data
+    });
+  })
 
-            _id : {
-              year : "$_id.year",
-              month : "$_id.month",
-              week : "$_id.week"
-            },
-            totalWeeklyAmount : {
-              $sum : "$totalDailyAmount"
-            },
-            totalDayAmount : {
-              $push : {
-                totalDayAmount : "$totalDailyAmount",
-                dayOfWeek : "$_id.day"
-              }
-            }
-          }
-        },
-        {
-          $match : {
-            "_id.month" : 3,
-            "_id.week" : 12
-          }
-        }
-      ],
-      function(err, results){
-        console.log("this is the result: ", results); // logs a result if the there is one, and [] if there is no result.
-        console.log("THIS IS THE WEEKLY AMOUNT "+results.totalWeeklyAmount);
-      });
-      res.render('index', {
-        results: results
-      });
+
 
 });
 
