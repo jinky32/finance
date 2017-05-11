@@ -1,0 +1,25 @@
+<h1>{{title}}</h1>
+<p>Hi! Welcome to {{title}} {{data._id.name}}</p>
+
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Total</th>
+    </tr>
+    <tbody>
+    {{#each data.MonthlySpends}}
+        <tr>
+            <td>{{../data._id.name}}</td>
+            <td>{{formatNumber this style="currency" currency="GBP"}}</td>
+            <td></td>
+        </tr>
+    {{/each}}
+    <tr>
+        <td></td>
+        <td></td>
+        <td>{{formatNumber data.totalMonthlyAmount style="currency" currency="GBP"}}</td>
+    </tr>
+    </tbody>
+</table>
