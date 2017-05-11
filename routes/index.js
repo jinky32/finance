@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/test/:vendor/:year/:month/:week', function(req, res, next) {
+router.get('/test/:vendor/:year/:month', function(req, res, next) {
 
   Statement.aggregate([
     { "$match": { "name": req.params.vendor } },
@@ -29,8 +29,9 @@ router.get('/test/:vendor/:year/:month/:week', function(req, res, next) {
           {
             "$and": [
               { "$eq": [{ "$year": "$date" },  parseInt(req.params.year)  ]},
-              { "$eq": [{ "$month": "$date" }, parseInt(req.params.month) ]},
-              { "$eq": [{ "$week": "$date" },  parseInt(req.params.week)  ]}
+              { "$eq": [{ "$month": "$date" }, parseInt(req.params.month) ]}
+              //,
+              //{ "$eq": [{ "$week": "$date" },  parseInt(req.params.week)  ]}
             ]
           },
           "$$KEEP",
@@ -104,9 +105,12 @@ router.get('/test/:vendor/:year/:month/:week', function(req, res, next) {
     }
   ], function(err, data){
     if (err) throw err;
-    console.log(util.inspect(data));
+    var first = data[0];
+    //console.log(util.inspect(data));
+    console.log(util.inspect(first));
     res.render('index', {
-      data: data
+      //data: data
+      data: first
     });
   })
 

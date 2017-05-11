@@ -1,8 +1,18 @@
 <h1>{{title}}</h1>
-  <p>Hi! Welcome to {{title}}</p>
+  <p>Hi! Welcome to {{title}} {{data._id.name}}</p>
 
 
 {{#each data}}
-  At  {{this._id.name}}, the total weekly amount was {{this.totalWeeklyAmount}}
+  At  {{this._id.name}}, the total monthly amount was {{this.totalMonthlyAmount}}<br />
+  {{this.MonthlySpends}} <br />
+  <!--{{#each this.MonthlySpends}}-->
+    <!--{{this.MonthlySpends}} <br />-->
+  <!--{{/each}}-->
+  {{#each this.MonthlySpends}}
+      {{ this }}
+  {{/each}}
+
+
 {{/each}}
+
 
