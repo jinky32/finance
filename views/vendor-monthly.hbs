@@ -12,7 +12,8 @@
     {{#each data.MonthlySpends}}
         <tr>
             <td>{{../data._id.name}}</td>
-            <td>{{formatNumber this style="currency" currency="GBP"}}</td>
+            <!--<td>{{formatNumber this style="currency" currency="GBP"}}</td>-->
+            <td>{{this}}</td>
             <td></td>
         </tr>
     {{/each}}
