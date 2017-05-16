@@ -4,6 +4,7 @@
 <table class="table table-striped">
     <tr>
         <th>Name</th>
+        <th>Date</th>
         <th>Amount</th>
         <th>Total</th>
     </tr>
@@ -15,7 +16,8 @@
         {{#each this.spend}}
             <tr>
                 <td>{{../this._id.name}}</td>
-                <td>{{formatNumber this style="currency" currency="GBP"}}</td>
+                <td>{{formatDate this.date weekday="long" day="numeric" month="long" year="numeric"}}</td>
+                <td>{{formatNumber this.amount style="currency" currency="GBP"}}</td>
                 <td></td>
             </tr>
 

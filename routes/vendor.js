@@ -71,7 +71,11 @@ router.get('/:vendor/:year/:month', function(req, res, next) {
                                 "name": "$name",
                                 "year": "$year"
                             },
-                            "spend": { "$push":"$amount" },
+                            spend:
+                            { '$push':
+                                { 'date': '$date' ,
+                                    'amount':'$amount'}
+                            },
                             "total": { "$sum": "$amount" }
                         }
                     }
@@ -93,7 +97,11 @@ router.get('/:vendor/:year/:month', function(req, res, next) {
                             "name": "$name",
                             "month": "$month"
                         },
-                        "spend": { "$push":"$amount" },
+                        spend:
+                        { '$push':
+                        { 'date': '$date' ,
+                            'amount':'$amount'}
+                        },
                         "total": { "$sum": "$amount" }
                     }
                 }
