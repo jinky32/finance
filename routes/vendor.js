@@ -38,10 +38,11 @@ router.get('/:vendor/:year/:month', function(req, res, next) {
 
     // Sample request
     var request = {
-        "name":"RINGGO",
-        "year": 2017,
-        "month":3,
-        "week":12
+        "name":req.params.vendor,
+        "year": parseInt(req.params.year),
+        "month":parseInt(req.params.month)
+        //,
+        //"week":12
     };
 
 // Build initial match document on name
@@ -101,25 +102,25 @@ router.get('/:vendor/:year/:month', function(req, res, next) {
 
 // Add week followed by week facet
 
-    if (request["week"]) {
-        addFields["week"] = { "$week": "$date" };
-        facet["Weekly"] =
-            [
-                {
-                    "$match":{ "week": request["week"] }
-                },
-                {
-                    "$group": {
-                        "_id": {
-                            "name": "$name",
-                            "week": "$week"
-                        },
-                        "spend": { "$push":"$amount" },
-                        "total": { "$sum": "$amount" }
-                    }
-                }
-            ];
-    }
+    //if (request["week"]) {
+    //    addFields["week"] = { "$week": "$date" };
+    //    facet["Weekly"] =
+    //        [
+    //            {
+    //                "$match":{ "week": request["week"] }
+    //            },
+    //            {
+    //                "$group": {
+    //                    "_id": {
+    //                        "name": "$name",
+    //                        "week": "$week"
+    //                    },
+    //                    "spend": { "$push":"$amount" },
+    //                    "total": { "$sum": "$amount" }
+    //                }
+    //            }
+    //        ];
+    //}
 
 // Use aggregate builder
 
