@@ -1,14 +1,39 @@
 <h1>{{title}}</h1>
-<p>Hi! Welcome to {{title}} {{data.Yearly._id.name}}</p>
-foo
-{{data.Yearly.[_id].[name]}}
+<p>Hi! Welcome to {{title}}</p>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Total</th>
+    </tr>
+    <tbody>
 
 {{#each data}}
 
     {{#each this.Yearly}}
-        <li>{{this._id.name}}</li>
-        <li>{{this._id.year}}</li>
+        {{#each this.spend}}
+            <tr>
+                <td>{{../this._id.name}}</td>
+                <td>{{formatNumber this style="currency" currency="GBP"}}</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        {{/each}}
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{formatNumber this.total style="currency" currency="GBP"}}</td>
+        </tr>
     {{/each}}
 
 
 {{/each}}
+
+    </tbody>
+</table>
+
+
+
