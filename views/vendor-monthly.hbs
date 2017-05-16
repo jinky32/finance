@@ -1,26 +1,14 @@
 <h1>{{title}}</h1>
-<p>Hi! Welcome to {{title}} {{data._id.name}}</p>
+<p>Hi! Welcome to {{title}} {{data.Yearly._id.name}}</p>
+foo
+{{data.Yearly.[_id].[name]}}
 
+{{#each data}}
 
-<table class="table table-striped">
-    <tr>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Total</th>
-    </tr>
-    <tbody>
-    {{#each data.MonthlySpends}}
-        <tr>
-            <td>{{../data._id.name}}</td>
-            <!--<td>{{formatNumber this style="currency" currency="GBP"}}</td>-->
-            <td>{{this}}</td>
-            <td></td>
-        </tr>
+    {{#each this.Yearly}}
+        <li>{{this._id.name}}</li>
+        <li>{{this._id.year}}</li>
     {{/each}}
-    <tr>
-        <td></td>
-        <td></td>
-        <td>{{formatNumber data.totalMonthlyAmount style="currency" currency="GBP"}}</td>
-    </tr>
-    </tbody>
-</table>
+
+
+{{/each}}
