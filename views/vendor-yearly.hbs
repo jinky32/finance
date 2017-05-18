@@ -1,5 +1,5 @@
 <h1>{{title}}</h1>
-<p>Hi! Welcome to the spend at {{name}} in {{month}}, {{year}}</p> Invorrect month being recognised{{formatDate month month="long"}}
+<p>Hi! Welcome to the spend at {{name}} in {{year}}</p>
 
 <table class="table table-striped">
     <tr>
@@ -12,7 +12,7 @@
 
 {{#each data}}
 
-    {{#each this.Monthly}}
+    {{#each this.Yearly}}
         {{#each this.spend}}
             <tr>
                 <td>{{../this._id.name}}</td>

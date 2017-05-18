@@ -10,14 +10,27 @@ const util = require('util');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   //Product.find(function (err, docs) {
-  Statement.find(function (err, docs) {
+  Statement.aggregate([{
+    "$group": {_id: "$name", count: { "$sum": 1}}
+  }, {
+    "$sort": {count: -1}
+  }], function(err, data){
+    if (err) throw err;
+    //var first = data[0];
+    console.log(util.inspect(data));
+    //console.log(util.inspect(first));
     res.render('index', {
-      title: 'Stuart Express',
-      name: 'Stuart',
-      products: docs
+      data: data,
+      title:"Stuart Page"
+      //data: first
     });
-  });
+  })
 });
+
+
+
+
+
 
 router.get('/test/:vendor/:year/:month', function(req, res, next) {
 

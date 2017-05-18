@@ -1,10 +1,27 @@
 <h1>{{title}}</h1>
-  <p>Hi! Welcome to {{title}} {{data._id.name}}</p>
+  <p>Hi! Welcome to {{title}} </p>
 
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Number of Spends</th>
+    </tr>
+    <tbody>
 
-{{#each data.MonthlySpends}}
-{{this}}<br/>
+{{#each data}}
+    <tr>
+        <td><a href="/vendor/{{this._id}}">{{this._id}}</a></td>
+        <td>{{this.count}}</td>
+
+    </tr>
+
 
 {{/each}}
+
+    </tbody>
+</table>
+
+
+
 
 
