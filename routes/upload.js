@@ -5,6 +5,7 @@ var express = require("express");
 var multer = require('multer');
 var router = express.Router();
 var path = require('path');
+var mongoose = require('mongoose');
 //childprocess is used in the runScript helper function.  But dose it go here or in the function file?
 var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
@@ -92,10 +93,27 @@ router.get('/today', function(req, res, next) {
                 //data: first
             });
         });
+});
 
 
 
+router.post('/today', function(req, res, next) {
 
+    var item = {
+        name : req.body.name,
+        amount : req.body.amount,
+        category : req.body.category
+    };
+    var id = req.body.id;
+
+    Statement.updateOne({"_id":mongoose.Types.ObjectId(id)}, {$set:item}, function(err, result) {
+        if (err) {
+            console.error('error, no entry found');
+        }
+       //assert.equal(null, err)
+        console.log("Item updated");
+    });
+    res.redirect('/upload/today');
 });
 
 module.exports = router;
