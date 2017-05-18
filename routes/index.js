@@ -9,6 +9,7 @@ const util = require('util');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  //req.flash('success', 'This is a flash message using the express-flash module.');
   //Product.find(function (err, docs) {
   Statement.aggregate([{
     "$group": {_id: "$name", count: { "$sum": 1}}
@@ -26,8 +27,6 @@ router.get('/', function(req, res, next) {
     });
   })
 });
-
-
 
 
 

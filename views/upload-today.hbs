@@ -1,0 +1,34 @@
+<h1>Upload</h1>
+<p>Hi! Welcome to the upload page</p>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Cateogry</th>
+    </tr>
+    <tbody>
+
+{{#each data}}
+ <tr>
+     <td>{{this.name}}</td>
+     <td>{{formatNumber this.amount style="currency" currency="GBP"}}</td>
+     <td>{{formatDate this.date weekday="long" day="numeric" month="long" year="numeric"}}</td>
+     <td>{{this.category}}</td>
+ </tr>
+{{/each}}
+
+    </tbody>
+</table>
+
+
+    {{#each shop}}
+
+
+
+    {{/each}}
+    <!--<li>This amount {{this.amount}} was spent at {{this.name}} on {{this.date}} and used method - {{this.method}}</li>-->
+
+    <!--the below is when fomat.js is in-->
+    <!--formatDate this.date weekday="long" day="numeric" month="long" year="numeric"-->

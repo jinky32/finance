@@ -10,6 +10,9 @@ var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
 var statementImport = require('../helpers/statement-seeder');
 var statements= require('../data/boom.json');
+var Statement = require('../models/statement');
+const util = require('util');
+
 
 //Get root route
 router.get('/', function(req, res, next) {
@@ -58,8 +61,41 @@ router.post('/',
             console.log('finished running some-script.js');
         });
 
+        res.redirect('/upload/today');
         console.log('THIS IS THE FILENAME AGAIN! - '+ filename);
+
+
 //TODO need to find a way to send a success message on successful upload
+});
+
+
+
+/* GET home page. */
+router.get('/today', function(req, res, next) {
+
+    var start = new Date();
+    start.setHours(0,0,0,0);
+
+    var end = new Date();
+    end.setHours(23,59,59,999);
+    //res.send("Hello");
+
+    Statement.find({importDate: {$gte: start, $lt: end}},
+        function(err, data){
+            if (err) throw err;
+            //var first = data[0];
+            console.log(util.inspect(data));
+            //console.log(util.inspect(first));
+            res.render('upload-today', {
+                data: data,
+                title:"Stuart Page"
+                //data: first
+            });
+        });
+
+
+
+
 });
 
 module.exports = router;
