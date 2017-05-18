@@ -1,34 +1,49 @@
 <h1>Upload</h1>
-<p>Hi! Welcome to the upload page</p>
 
-<table class="table table-striped">
-    <tr>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Date</th>
-        <th>Cateogry</th>
-    </tr>
-    <tbody>
+    <h3>Update Data</h3>
+
 
 {{#each data}}
- <tr>
-     <td>{{this.name}}</td>
-     <td>{{formatNumber this.amount style="currency" currency="GBP"}}</td>
-     <td>{{formatDate this.date weekday="long" day="numeric" month="long" year="numeric"}}</td>
-     <td>{{this.category}}</td>
- </tr>
+    <form class="form-inline" action="/update" method="post">
+    <label class="sr-only" for="id">ID</label>
+    <input type="hidden" class="form-control mb-2 mr-sm-2 mb-sm-0" id="id" name="id" value="testvalue">
+
+    <label class="sr-only" for="name">Name</label>
+    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="name" name="name" value="{{this.name}}">
+
+    <label class="sr-only" for="amount">Amount</label>
+    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="amount" name="amount" value="{{this.amount}}">
+
+    <label class="sr-only" for="date">Date</label>
+    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="date" name="date" value="{{this.date}}">
+
+    <label class="sr-only" for="category">Category</label>
+    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="category" name="category" value="{{this.category}}">
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    </form>
 {{/each}}
 
-    </tbody>
-</table>
-
-
-    {{#each shop}}
 
 
 
-    {{/each}}
-    <!--<li>This amount {{this.amount}} was spent at {{this.name}} on {{this.date}} and used method - {{this.method}}</li>-->
 
-    <!--the below is when fomat.js is in-->
-    <!--formatDate this.date weekday="long" day="numeric" month="long" year="numeric"-->
+
+
+    <label class="sr-only" for="inlineFormInput">Name</label>
+    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Jane Doe">
+
+    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+        <div class="input-group-addon">@</div>
+        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+
+
+
