@@ -23,8 +23,26 @@ router.get('/', function(req, res, next) {
 
     Statement.find().distinct('category', function(error, ids) {
         //console.log(ids);
-        for (index = 0; index < ids.length; ++index) {
-            console.log(ids[index]);
+        for (i = 0; i < ids.length; ++i) {
+            console.log(ids[i]);
+            //ids[i] = [];
+            Statement.find({"category":ids[i]}, function(err, docs){
+                //for (i=0; i <docs.length; i++){
+                    //});
+
+                    var array = [];
+                    docs.forEach(function(item) {
+                        array.push({name:item.name, category:item.category});
+                    });
+                     console.log(array);
+
+                    //console.log(docs[i].name);
+                    //docs[i].category = {name:docs[i].name};
+                    //console.log(docs[i].category);
+                    //console.log(Foo);
+                //}
+
+            })
         }
     });
     //console.log(util.inspect(categories));
