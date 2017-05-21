@@ -18,6 +18,16 @@ const util = require('util');
 //Get root route
 router.get('/', function(req, res, next) {
     console.log(req.body, 'Body');
+    //var categories = Statement.distinct('category');
+    //console.log("HERE ARE THE CATEGORIES "+categories);
+
+    Statement.find().distinct('category', function(error, ids) {
+        //console.log(ids);
+        for (index = 0; index < ids.length; ++index) {
+            console.log(ids[index]);
+        }
+    });
+    //console.log(util.inspect(categories));
     res.render('upload');
 });
 
@@ -47,7 +57,7 @@ router.post('/',
     })
         .single('statement'),
     function(req, res) {
-    //console.log(req.body, 'Body');
+            //console.log(req.body, 'Body');
         console.log(req.body.bank, 'Body');
 
         //console.log(req.files, 'files');
