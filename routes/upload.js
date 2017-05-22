@@ -18,33 +18,26 @@ const util = require('util');
 //Get root route
 router.get('/', function(req, res, next) {
     console.log(req.body, 'Body');
-    //var categories = Statement.distinct('category');
-    //console.log("HERE ARE THE CATEGORIES "+categories);
+    //const haystack = [1, 2, 3];
+    //const needle = 1;
+    //const isInArray = haystack.includes(needle);
+    //console.log(isInArray);
+// find all the distinct catgories in the db
+    Statement.aggregate(
+        [
+            { $group : { _id : "$category", name: { $push: "$name" } } }
+        ]
+    , function(err, docs){
+            for(i=0; i < docs.length; i++){
+                console.log("THIS IS THE ARRAY"+docs[i].name);
+                const needle = "AMERICAN EXP 3717";
+                const isInArray = docs[i].name.includes(needle);
+                console.log("THE VALUE IS IN THE ARRAY = "+isInArray);
+                //console.log(docs[i].name);
+            }
 
-    Statement.find().distinct('category', function(error, ids) {
-        //console.log(ids);
-        for (i = 0; i < ids.length; ++i) {
-            console.log(ids[i]);
-            //ids[i] = [];
-            Statement.find({"category":ids[i]}, function(err, docs){
-                //for (i=0; i <docs.length; i++){
-                    //});
 
-                    var array = [];
-                    docs.forEach(function(item) {
-                        array.push({name:item.name, category:item.category});
-                    });
-                     console.log(array);
-
-                    //console.log(docs[i].name);
-                    //docs[i].category = {name:docs[i].name};
-                    //console.log(docs[i].category);
-                    //console.log(Foo);
-                //}
-
-            })
-        }
-    });
+        });
     //console.log(util.inspect(categories));
     res.render('upload');
 });
