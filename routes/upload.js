@@ -22,23 +22,32 @@ router.get('/', function(req, res, next) {
     //const needle = 1;
     //const isInArray = haystack.includes(needle);
     //console.log(isInArray);
-// find all the distinct catgories in the db
-    Statement.aggregate(
-        [
-            { $group : { _id : "$category", name: { $push: "$name" } } }
-        ]
-    , function(err, docs){
-            for(i=0; i < docs.length; i++){
-                console.log("THIS IS THE ARRAY"+docs[i].name);
-                const needle = "AMERICAN EXP 3717";
-                const isInArray = docs[i].name.includes(needle);
-                console.log("THE VALUE IS IN THE ARRAY = "+isInArray);
-                //console.log(docs[i].name);
-            }
 
 
-        });
-    //console.log(util.inspect(categories));
+    var categoriesCallback = function(docs){
+        //console.log(docs);
+        for(i=0; i < docs.length; i++){
+            console.log("THIS IS THE ARRAY"+docs[i].name);
+            const needle = "AMERICAN EXP 3717";
+            const isInArray = docs[i].name.includes(needle);
+            console.log("THE VALUE IS IN THE ARRAY = "+isInArray + " and its in "+docs[i]._id);
+            console.log(docs[i].name);
+        }
+    };
+
+    var getCategories = function(categoriesCallback){
+        // find all the distinct catgories in the db
+        Statement.aggregate(
+            [
+                { $group : { _id : "$category", name: { $push: "$name" } } }
+            ]
+            , function(err, docs){
+                categoriesCallback(docs);
+            });
+        //console.log(util.inspect(categories));
+    };
+    getCategories(categoriesCallback);
+
     res.render('upload');
 });
 
