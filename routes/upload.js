@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
 var statementImport = require('../helpers/statement-seeder');
+var convertJSON = require('../helpers/convertJSONOriginal');
 var statements= require('../data/boom.json');
 var Statement = require('../models/statement');
 const util = require('util');
@@ -78,16 +79,33 @@ router.post('/',
         .single('statement'),
     function(req, res) {
             //console.log(req.body, 'Body');
+
+
+        convertJSON.convertJSON(req.file.filename, function(err, file){
+    if (err){
+        console.log('fikkin erro man');
+    } else {
+        //statementImport.statementSeeder(file, function (err) {
+        //    if (err) throw err;
+        //    console.log('finished running some-script.js');
+        //});
+        console.log('all was good '+file);
+    }
+});
+//
+//upload.statementSeeder("../data/" + req.file.filename.split('.')[0] + ".json");
         console.log(req.body.bank, 'Body');
 
         //console.log(req.files, 'files');
         console.log('THIS IS THE FILENAME - '+req.file.filename);
-        var filename = req.file.filename;
+        var filename = "../data/" + req.file.filename.split('.')[0] + ".json";
+        console.log('THIS IS THE FILENAME AGAIN- '+filename);
+        console.log('THIS IS THE JSON FILENAME - '+req.file.filename.split('.')[0] + ".json");
         //res.end('File is uploaded')
         //res.send('File is uploaded')
 //TODO add another param to the runscript function that will take the name of the file to be parsed (req.file.filename) by statement-seeder
-
-        statementImport.statementSeeder(statements, function (err) {
+//should statements be upload.statementSeeder("../data/" + req.file.filename.split('.')[0] + ".json")
+        statementImport.statementSeeder(filename, function (err) {
             if (err) throw err;
             console.log('finished running some-script.js');
         });

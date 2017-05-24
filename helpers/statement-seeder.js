@@ -15,9 +15,9 @@ var statements2= require('../data/boom.json');
     var parseDate = require('./parseDate');
     var splitName = require('./splitName');
 
-console.log('THIS IS THE NEW OBJECT '+ statements);
-    console.log('THIS SIS STATEMENTS '+JSON.stringify(statements));
-    //console.log('AND THIS SIS STATEMENTS2 '+JSON.stringify(statements2));
+//console.log('THIS IS THE NEW OBJECT '+ statements);
+//    console.log('THIS SIS STATEMENTS '+JSON.stringify(statements));
+//    console.log('AND THIS SIS STATEMENTS2 '+JSON.stringify(statements2));
 
 //TODO figure out why all records from the json aren't being imported.  Is it because the amunt values have commas in ?
     var done = 0;
@@ -49,7 +49,7 @@ console.log('THIS IS THE NEW OBJECT '+ statements);
         //newStatement.amount = Number(statements[i].amount);
         newStatement.amount = Number(statements[i].amount.replace(/,/g, ''));
 
-        console.log('imported record ' + i + 'of ' + statements.length);
+        //console.log('imported record ' + i + 'of ' + statements.length);
         //newStatement.save();
         newStatement.save(function(err, result){
             done++;

@@ -34,7 +34,7 @@ var convertJSON = function convertJSON(inputFile, callback) {
                 fs.readFile('./data/' + inputFile.split('.')[0] + '.json', 'utf8', function (err, data) {
                     if (err) throw err;
                     obj = JSON.parse(data);
-                    //console.log(obj);
+                    console.log("Here is the object from jsonconvert "+ JSON.stringify(obj));
                     callback(err,obj);
                 });
                 console.log("The file was saved!");
