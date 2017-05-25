@@ -15,7 +15,7 @@ var statements2= require('../data/boom.json');
     var parseDate = require('./parseDate');
     var splitName = require('./splitName');
 
-//console.log('THIS IS THE NEW OBJECT '+ statements);
+console.log('THIS IS THE NEW OBJECT '+ statements);
 //    console.log('THIS SIS STATEMENTS '+JSON.stringify(statements));
 //    console.log('AND THIS SIS STATEMENTS2 '+JSON.stringify(statements2));
 
@@ -54,6 +54,7 @@ var statements2= require('../data/boom.json');
         newStatement.save(function(err, result){
             done++;
             if(done === statements.length){
+                console.log('Im done');
                 exit();
             }
             else {
