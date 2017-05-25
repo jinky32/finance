@@ -88,19 +88,27 @@ router.post('/',
         statementImport.statementSeeder(file, function (err) {
             if (err) throw err;
             console.log('finished running some-script.js');
+            //res.redirect('/upload/today');
         });
-        console.log('all was good '+file);
+        console.log('upload.js says all was good');
+
     }
+            res.redirect('/upload/today');
 });
+
+
+        //console.log('THIS IS THE FILENAME AGAIN! - '+ filename);
+
+    });
 //
 //upload.statementSeeder("../data/" + req.file.filename.split('.')[0] + ".json");
-        console.log(req.body.bank, 'Body');
+//        console.log(req.body.bank, 'Body');
 
         //console.log(req.files, 'files');
-        console.log('THIS IS THE FILENAME - '+req.file.filename);
-        var filename = "../data/" + req.file.filename.split('.')[0] + ".json";
-        console.log('THIS IS THE FILENAME AGAIN- '+filename);
-        console.log('THIS IS THE JSON FILENAME - '+req.file.filename.split('.')[0] + ".json");
+        //console.log('THIS IS THE FILENAME - '+req.file.filename);
+        //var filename = "../data/" + req.file.filename.split('.')[0] + ".json";
+        //console.log('THIS IS THE FILENAME AGAIN- '+filename);
+        //console.log('THIS IS THE JSON FILENAME - '+req.file.filename.split('.')[0] + ".json");
         //res.end('File is uploaded')
         //res.send('File is uploaded')
 //TODO add another param to the runscript function that will take the name of the file to be parsed (req.file.filename) by statement-seeder
@@ -110,12 +118,11 @@ router.post('/',
 //            console.log('finished running some-script.js');
 //        });
 
-        res.redirect('/upload/today');
-        console.log('THIS IS THE FILENAME AGAIN! - '+ filename);
+
 
 
 //TODO need to find a way to send a success message on successful upload
-});
+
 
 
 
@@ -133,7 +140,7 @@ router.get('/today', function(req, res, next) {
         function(err, data){
             if (err) throw err;
             //var first = data[0];
-            console.log(util.inspect(data));
+            console.log("HERE IS DATA IN TODAY "+util.inspect(data));
             //console.log(util.inspect(first));
             res.render('upload-today', {
                 data: data,
