@@ -11,6 +11,7 @@ var convertJSON = function convertJSON(inputFile, callback) {
 
     const converter=csv({
         noheader:true,
+        delimiter:'\t',
         headers: ['date','vendor','amount'],
         trim:false
     })

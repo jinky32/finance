@@ -11,7 +11,7 @@ var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
 var statementImport = require('../helpers/statement-seeder');
 var convertJSON = require('../helpers/convertJSONOriginal');
-var statements= require('../data/boom.json');
+//var statements= require('../data/boom.json');
 var Statement = require('../models/statement');
 const util = require('util');
 
@@ -85,10 +85,10 @@ router.post('/',
     if (err){
         console.log('fikkin erro man');
     } else {
-        //statementImport.statementSeeder(file, function (err) {
-        //    if (err) throw err;
-        //    console.log('finished running some-script.js');
-        //});
+        statementImport.statementSeeder(file, function (err) {
+            if (err) throw err;
+            console.log('finished running some-script.js');
+        });
         console.log('all was good '+file);
     }
 });
@@ -105,10 +105,10 @@ router.post('/',
         //res.send('File is uploaded')
 //TODO add another param to the runscript function that will take the name of the file to be parsed (req.file.filename) by statement-seeder
 //should statements be upload.statementSeeder("../data/" + req.file.filename.split('.')[0] + ".json")
-        statementImport.statementSeeder(filename, function (err) {
-            if (err) throw err;
-            console.log('finished running some-script.js');
-        });
+//        statementImport.statementSeeder(filename, function (err) {
+//            if (err) throw err;
+//            console.log('finished running some-script.js');
+//        });
 
         res.redirect('/upload/today');
         console.log('THIS IS THE FILENAME AGAIN! - '+ filename);
