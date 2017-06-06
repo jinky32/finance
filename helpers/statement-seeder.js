@@ -2,10 +2,10 @@
  * Created by stuartbrown on 20/04/2017.
  */
 
-var statementSeeder = function statementSeeder(statements) {
+var statementSeeder = function statementSeeder(statements, callback) {
 console.log("now in statement seeder");
 
-var statements2= require('../data/boom.json');
+//var statements2= require('../data/boom.json');
     var Statement = require('../models/statement');
     var mongoose = require('mongoose');
 //connect to mongodb
@@ -15,8 +15,8 @@ var statements2= require('../data/boom.json');
     var parseDate = require('./parseDate');
     var splitName = require('./splitName');
 
-//console.log('THIS IS THE NEW OBJECT '+ statements);
-//    console.log('THIS SIS STATEMENTS '+JSON.stringify(statements));
+console.log('THIS IS THE NEW OBJECT '+ statements);
+    console.log('THIS IS STRINGIFIED STATEMENTS '+JSON.stringify(statements));
 //    console.log('AND THIS SIS STATEMENTS2 '+JSON.stringify(statements2));
 
 //TODO figure out why all records from the json aren't being imported.  Is it because the amunt values have commas in ?
@@ -24,8 +24,11 @@ var statements2= require('../data/boom.json');
 // set substring to three space.  This will be used to check for those spaces in the name values
 // in the source data
     substring = "   ";
-    //console.log(statements.length);
-    for( var i = 0; i < statements.length; i++ ) {
+    console.log('statements.length -----'+ statements.length);
+    console.log('Object.keys.length -----'+Object.keys(statements).length);
+
+    for( var i = 0; i < Object.keys(statements).length; i++ ) {
+    //for( var i = 0; i < statements.length; i++ ) {
         console.log("now in statement seeder for loop");
         // create new statement object
         var newStatement = new Statement();
@@ -53,10 +56,13 @@ var statements2= require('../data/boom.json');
         //console.log('imported record ' + i + 'of ' + statements.length);
         //newStatement.save();
         newStatement.save(function(err, result){
+            if(err){
+                callback(err);
+            };
             done++;
             if(done === statements.length){
                 console.log('Im done');
-                //callback(err,func);
+                callback(undefined);
                 exit();
             }
             else {

@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var childProcess = require('child_process');
 var runScript = require('../helpers/runScript');
 var statementImport = require('../helpers/statement-seeder');
-var convertJSON = require('../helpers/convertJSONOriginal');
+var convertJSON = require('../helpers/convertJSON');
 //var statements= require('../data/boom.json');
 var Statement = require('../models/statement');
 const util = require('util');
@@ -86,7 +86,10 @@ router.post('/',
         console.log('fikkin erro man');
     } else {
         statementImport.statementSeeder(file, function (err) {
-            if (err) throw err;
+            //if (err) throw err;
+            if(err){
+                console.log('OH NO, THERE WAS AN ERROR');
+            }
             console.log('finished running some-script.js');
             //res.redirect('/upload/today');
         });
