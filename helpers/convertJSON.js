@@ -21,10 +21,7 @@ var convertJSON = function convertJSON(inputFile, callback) {
                 console.log("An Error Has Occurred");
                 console.log(err);
             }
-            // create a variable called json and store
-            // the result of the conversion
 
-            //var json = result;
             var json = JSON.stringify(result);
 
             fs.writeFile('./data/' + inputFile.split('.')[0] + '.json', json, function(err) {
