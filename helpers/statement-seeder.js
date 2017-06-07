@@ -2,30 +2,26 @@
  * Created by stuartbrown on 20/04/2017.
  */
 
-var statementSeeder = function statementSeeder(statements) {
+var statementSeeder = function statementSeeder(statements, callback) {
+    console.log("now in statement seeder");
 
-
-var statements2= require('../data/boom.json');
     var Statement = require('../models/statement');
     var mongoose = require('mongoose');
-//connect to mongodb
-//    mongoose.connect('localhost:27017/statement');
-//console.log('ready state is '+mongoose.connection.readyState);
-
     var parseDate = require('./parseDate');
     var splitName = require('./splitName');
 
-console.log('THIS IS THE NEW OBJECT '+ statements);
-    console.log('THIS SIS STATEMENTS '+JSON.stringify(statements));
-    //console.log('AND THIS SIS STATEMENTS2 '+JSON.stringify(statements2));
+    //console.log('THIS IS THE NEW OBJECT '+ statements);
+    //    console.log('THIS IS STRINGIFIED STATEMENTS '+JSON.stringify(statements));
 
-//TODO figure out why all records from the json aren't being imported.  Is it because the amunt values have commas in ?
+
     var done = 0;
 // set substring to three space.  This will be used to check for those spaces in the name values
 // in the source data
     substring = "   ";
-    //console.log(statements.length);
-    for( var i = 0; i < statements.length; i++ ) {
+
+    for( var i = 0; i < Object.keys(statements).length; i++ ) {
+    //for( var i = 0; i < statements.length; i++ ) {
+        console.log("now in statement seeder for loop");
         // create new statement object
         var newStatement = new Statement();
         //use the stringToDate helper function to cast the string in imput file to a Date
@@ -46,14 +42,18 @@ console.log('THIS IS THE NEW OBJECT '+ statements);
             }
         }
         newStatement.name = splitName.splitName(statements[i].vendor);
-        //newStatement.amount = Number(statements[i].amount);
         newStatement.amount = Number(statements[i].amount.replace(/,/g, ''));
 
-        console.log('imported record ' + i + 'of ' + statements.length);
-        //newStatement.save();
+        //console.log('imported record ' + i + 'of ' + statements.length);
+
         newStatement.save(function(err, result){
+            if(err){
+                callback(err);
+            };
             done++;
             if(done === statements.length){
+                console.log('Im done');
+                callback(undefined);
                 exit();
             }
             else {
@@ -62,8 +62,9 @@ console.log('THIS IS THE NEW OBJECT '+ statements);
         });
 
     }
-
+    console.log("now out statement seeder for loop");
     function exit(){
+        console.log("now in statement seeder fexit function");
         mongoose.disconnect();
     };
 

@@ -1,0 +1,40 @@
+<h1>{{title}}</h1>
+<p>Hi! Welcome to the spend at {{name}} in {{year}}</p>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Total</th>
+    </tr>
+    <tbody>
+
+{{#each data}}
+
+    {{#each this.Yearly}}
+        {{#each this.spend}}
+            <tr>
+                <td>{{../this._id.name}}</td>
+                <td>{{formatDate this.date weekday="long" day="numeric" month="long" year="numeric"}}</td>
+                <td>{{formatNumber this.amount style="currency" currency="GBP"}}</td>
+                <td></td>
+            </tr>
+
+        {{/each}}
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{formatNumber this.total style="currency" currency="GBP"}}</td>
+        </tr>
+    {{/each}}
+
+
+{{/each}}
+
+    </tbody>
+</table>
+
+
+

@@ -1,17 +1,27 @@
 <h1>{{title}}</h1>
-  <p>Hi! Welcome to {{title}}</p>
-{{#each products}}
-   test!
+  <p>Hi! Welcome to {{title}} </p>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Number of Spends</th>
+    </tr>
+    <tbody>
+
+{{#each data}}
+    <tr>
+        <td><a href="/vendor/{{this._id}}">{{this._id}}</a></td>
+        <td>{{this.count}}</td>
+
+    </tr>
+
+
 {{/each}}
 
-<h2>{{field3}}</h2>
+    </tbody>
+</table>
 
-{{# if condition }}
-true
-{{else}}
-false
-{{/if}}
 
-{{# each anyArray as |val key| }}
-    {{val}}:{{key}}
-{{/each}}
+
+
+
